@@ -1,19 +1,14 @@
 ﻿using CefSharp;
 using CefSharp.WinForms;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Browser
 {
     public partial class Form1 : Form
     {
+        ChromiumWebBrowser browser;
         public Form1()
         {
             InitializeComponent();
@@ -24,10 +19,20 @@ namespace Browser
                 IgnoreCertificateErrors = true
             };
             Cef.Initialize(config);
+            menuStrip.Renderer = new MenuRenderer();
+            UserSettings.Load();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            //Load homepage, TODO: Allow the user to set a page as home and load that.
+            browser = new ChromiumWebBrowser(UserSettings.Home);
+            browserContainer.Controls.Add(browser);
         }
 
         private void btnClose_Click(object sender, EventArgs e)
         {
+            UserSettings.Save();
             Application.Exit();
         }
 
@@ -39,6 +44,34 @@ namespace Browser
         private void btnClose_MouseLeave(object sender, EventArgs e)
         {
             btnClose.BackColor = btnClose.Parent.BackColor;
+        }
+
+        private void btnMenu_Click(object sender, EventArgs e)
+        {
+            menuStrip.Show(btnMenu, 0, 32);
+        }
+
+        private void btnMenu_MouseEnter(object sender, EventArgs e)
+        {
+            btnMenu.BackColor = Color.DarkSlateGray;
+        }
+
+        private void btnMenu_MouseLeave(object sender, EventArgs e)
+        {
+            btnMenu.BackColor = btnMenu.Parent.BackColor;
+        }
+
+        private void setAsHomeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            UserSettings.Home = browser.GetMainFrame().Url;
+        }
+
+        private void textBox1_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Return)
+            {
+                browser.Load(txtAddress.Text);
+            }
         }
     }
 }

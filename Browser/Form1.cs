@@ -9,6 +9,8 @@ namespace Browser
     public partial class Form1 : Form
     {
         ChromiumWebBrowser browser;
+        string address;
+        bool addUpdate = false;
         public Form1()
         {
             InitializeComponent();
@@ -28,6 +30,13 @@ namespace Browser
             //Load homepage, TODO: Allow the user to set a page as home and load that.
             browser = new ChromiumWebBrowser(UserSettings.Home);
             browserContainer.Controls.Add(browser);
+            browser.AddressChanged += Browser_AddressChanged;
+        }
+
+        private void Browser_AddressChanged(object sender, AddressChangedEventArgs e)
+        {
+            address = e.Address;
+            addUpdate = true;
         }
 
         private void btnClose_Click(object sender, EventArgs e)
@@ -71,6 +80,15 @@ namespace Browser
             if (e.KeyCode == Keys.Return)
             {
                 browser.Load(txtAddress.Text);
+            }
+        }
+
+        private void tick_Tick(object sender, EventArgs e)
+        {
+            if (addUpdate)
+            {
+                txtAddress.Text = address;
+                addUpdate = false;
             }
         }
     }

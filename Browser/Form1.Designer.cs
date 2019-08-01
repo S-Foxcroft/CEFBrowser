@@ -31,24 +31,23 @@
             this.components = new System.ComponentModel.Container();
             this.titlebar = new System.Windows.Forms.Panel();
             this.btnMenu = new System.Windows.Forms.Label();
-            this.toolbarContainer = new System.Windows.Forms.FlowLayoutPanel();
+            this.txtAddress = new System.Windows.Forms.TextBox();
             this.btnClose = new System.Windows.Forms.Label();
             this.browserContainer = new System.Windows.Forms.Panel();
             this.menuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.setAsHomeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newItemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.txtAddress = new System.Windows.Forms.TextBox();
+            this.tick = new System.Windows.Forms.Timer(this.components);
             this.titlebar.SuspendLayout();
-            this.toolbarContainer.SuspendLayout();
             this.menuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // titlebar
             // 
             this.titlebar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.titlebar.Controls.Add(this.txtAddress);
             this.titlebar.Controls.Add(this.btnMenu);
-            this.titlebar.Controls.Add(this.toolbarContainer);
             this.titlebar.Controls.Add(this.btnClose);
             this.titlebar.Dock = System.Windows.Forms.DockStyle.Top;
             this.titlebar.Location = new System.Drawing.Point(0, 0);
@@ -71,15 +70,22 @@
             this.btnMenu.MouseEnter += new System.EventHandler(this.btnMenu_MouseEnter);
             this.btnMenu.MouseLeave += new System.EventHandler(this.btnMenu_MouseLeave);
             // 
-            // toolbarContainer
+            // txtAddress
             // 
-            this.toolbarContainer.Controls.Add(this.txtAddress);
-            this.toolbarContainer.Dock = System.Windows.Forms.DockStyle.Left;
-            this.toolbarContainer.Location = new System.Drawing.Point(0, 0);
-            this.toolbarContainer.Margin = new System.Windows.Forms.Padding(0);
-            this.toolbarContainer.Name = "toolbarContainer";
-            this.toolbarContainer.Size = new System.Drawing.Size(714, 32);
-            this.toolbarContainer.TabIndex = 1;
+            this.txtAddress.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.txtAddress.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.AllUrl;
+            this.txtAddress.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.txtAddress.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtAddress.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtAddress.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel, ((byte)(0)));
+            this.txtAddress.ForeColor = System.Drawing.Color.White;
+            this.txtAddress.Location = new System.Drawing.Point(0, 0);
+            this.txtAddress.Name = "txtAddress";
+            this.txtAddress.Size = new System.Drawing.Size(714, 28);
+            this.txtAddress.TabIndex = 0;
+            this.txtAddress.Text = "sample text";
+            this.txtAddress.WordWrap = false;
+            this.txtAddress.KeyUp += new System.Windows.Forms.KeyEventHandler(this.textBox1_KeyUp);
             // 
             // btnClose
             // 
@@ -137,21 +143,10 @@
             this.newItemToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
             this.newItemToolStripMenuItem.Text = "NewItem,";
             // 
-            // txtAddress
+            // tick
             // 
-            this.txtAddress.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtAddress.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
-            this.txtAddress.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.AllUrl;
-            this.txtAddress.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtAddress.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel, ((byte)(0)));
-            this.txtAddress.Location = new System.Drawing.Point(3, 3);
-            this.txtAddress.Name = "txtAddress";
-            this.txtAddress.Size = new System.Drawing.Size(501, 26);
-            this.txtAddress.TabIndex = 0;
-            this.txtAddress.Text = "sample text";
-            this.txtAddress.WordWrap = false;
-            this.txtAddress.KeyUp += new System.Windows.Forms.KeyEventHandler(this.textBox1_KeyUp);
+            this.tick.Enabled = true;
+            this.tick.Tick += new System.EventHandler(this.tick_Tick);
             // 
             // Form1
             // 
@@ -168,8 +163,7 @@
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.Form1_Load);
             this.titlebar.ResumeLayout(false);
-            this.toolbarContainer.ResumeLayout(false);
-            this.toolbarContainer.PerformLayout();
+            this.titlebar.PerformLayout();
             this.menuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -178,7 +172,6 @@
         #endregion
 
         private System.Windows.Forms.Panel titlebar;
-        private System.Windows.Forms.FlowLayoutPanel toolbarContainer;
         private System.Windows.Forms.Label btnClose;
         private System.Windows.Forms.Label btnMenu;
         private System.Windows.Forms.Panel browserContainer;
@@ -187,6 +180,7 @@
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem newItemToolStripMenuItem;
         private System.Windows.Forms.TextBox txtAddress;
+        private System.Windows.Forms.Timer tick;
     }
 }
 

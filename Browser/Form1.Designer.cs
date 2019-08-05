@@ -30,15 +30,15 @@
         {
             this.components = new System.ComponentModel.Container();
             this.titlebar = new System.Windows.Forms.Panel();
-            this.btnMenu = new System.Windows.Forms.Label();
             this.txtAddress = new System.Windows.Forms.TextBox();
+            this.btnMenu = new System.Windows.Forms.Label();
             this.btnClose = new System.Windows.Forms.Label();
             this.browserContainer = new System.Windows.Forms.Panel();
             this.menuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.setAsHomeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newItemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tick = new System.Windows.Forms.Timer(this.components);
+            this.settingFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.titlebar.SuspendLayout();
             this.menuStrip.SuspendLayout();
             this.SuspendLayout();
@@ -55,6 +55,25 @@
             this.titlebar.Size = new System.Drawing.Size(778, 32);
             this.titlebar.TabIndex = 0;
             // 
+            // txtAddress
+            // 
+            this.txtAddress.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtAddress.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.txtAddress.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.AllUrl;
+            this.txtAddress.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.txtAddress.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtAddress.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel, ((byte)(0)));
+            this.txtAddress.ForeColor = System.Drawing.Color.White;
+            this.txtAddress.Location = new System.Drawing.Point(10, 5);
+            this.txtAddress.Margin = new System.Windows.Forms.Padding(10, 30, 0, 0);
+            this.txtAddress.Name = "txtAddress";
+            this.txtAddress.Size = new System.Drawing.Size(704, 21);
+            this.txtAddress.TabIndex = 0;
+            this.txtAddress.Text = "sample text";
+            this.txtAddress.WordWrap = false;
+            this.txtAddress.KeyUp += new System.Windows.Forms.KeyEventHandler(this.textBox1_KeyUp);
+            // 
             // btnMenu
             // 
             this.btnMenu.Dock = System.Windows.Forms.DockStyle.Right;
@@ -69,23 +88,6 @@
             this.btnMenu.Click += new System.EventHandler(this.btnMenu_Click);
             this.btnMenu.MouseEnter += new System.EventHandler(this.btnMenu_MouseEnter);
             this.btnMenu.MouseLeave += new System.EventHandler(this.btnMenu_MouseLeave);
-            // 
-            // txtAddress
-            // 
-            this.txtAddress.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
-            this.txtAddress.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.AllUrl;
-            this.txtAddress.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.txtAddress.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtAddress.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtAddress.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel, ((byte)(0)));
-            this.txtAddress.ForeColor = System.Drawing.Color.White;
-            this.txtAddress.Location = new System.Drawing.Point(0, 0);
-            this.txtAddress.Name = "txtAddress";
-            this.txtAddress.Size = new System.Drawing.Size(714, 28);
-            this.txtAddress.TabIndex = 0;
-            this.txtAddress.Text = "sample text";
-            this.txtAddress.WordWrap = false;
-            this.txtAddress.KeyUp += new System.Windows.Forms.KeyEventHandler(this.textBox1_KeyUp);
             // 
             // btnClose
             // 
@@ -116,37 +118,39 @@
             this.menuStrip.DropShadowEnabled = false;
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.setAsHomeToolStripMenuItem,
-            this.aboutToolStripMenuItem,
             this.newItemToolStripMenuItem});
             this.menuStrip.Name = "menuStrip";
             this.menuStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
             this.menuStrip.ShowImageMargin = false;
             this.menuStrip.ShowItemToolTips = false;
-            this.menuStrip.Size = new System.Drawing.Size(116, 70);
+            this.menuStrip.Size = new System.Drawing.Size(131, 48);
             // 
             // setAsHomeToolStripMenuItem
             // 
             this.setAsHomeToolStripMenuItem.Name = "setAsHomeToolStripMenuItem";
-            this.setAsHomeToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
+            this.setAsHomeToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
             this.setAsHomeToolStripMenuItem.Text = "Set as Home";
             this.setAsHomeToolStripMenuItem.Click += new System.EventHandler(this.setAsHomeToolStripMenuItem_Click);
-            // 
-            // aboutToolStripMenuItem
-            // 
-            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
-            this.aboutToolStripMenuItem.Text = "About";
             // 
             // newItemToolStripMenuItem
             // 
             this.newItemToolStripMenuItem.Name = "newItemToolStripMenuItem";
-            this.newItemToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
-            this.newItemToolStripMenuItem.Text = "NewItem,";
+            this.newItemToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.newItemToolStripMenuItem.Text = "Import Settings";
+            this.newItemToolStripMenuItem.Click += new System.EventHandler(this.newItemToolStripMenuItem_Click);
             // 
             // tick
             // 
             this.tick.Enabled = true;
             this.tick.Tick += new System.EventHandler(this.tick_Tick);
+            // 
+            // settingFileDialog
+            // 
+            this.settingFileDialog.DefaultExt = "set";
+            this.settingFileDialog.FileName = "CBrowser.set";
+            this.settingFileDialog.Filter = "CBrowser Settings|*.set|All Files|*.*";
+            this.settingFileDialog.Title = "Settings Import...";
+            this.settingFileDialog.FileOk += new System.ComponentModel.CancelEventHandler(this.settingFileDialog_FileOk);
             // 
             // Form1
             // 
@@ -177,10 +181,10 @@
         private System.Windows.Forms.Panel browserContainer;
         private System.Windows.Forms.ContextMenuStrip menuStrip;
         private System.Windows.Forms.ToolStripMenuItem setAsHomeToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem newItemToolStripMenuItem;
         private System.Windows.Forms.TextBox txtAddress;
         private System.Windows.Forms.Timer tick;
+        private System.Windows.Forms.OpenFileDialog settingFileDialog;
     }
 }
 

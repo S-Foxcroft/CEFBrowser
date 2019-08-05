@@ -22,12 +22,11 @@ namespace Browser
             };
             Cef.Initialize(config);
             menuStrip.Renderer = new MenuRenderer();
-            UserSettings.Load();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            //Load homepage, TODO: Allow the user to set a page as home and load that.
+            UserSettings.Load();
             browser = new ChromiumWebBrowser(UserSettings.Home);
             browserContainer.Controls.Add(browser);
             browser.AddressChanged += Browser_AddressChanged;
@@ -90,6 +89,16 @@ namespace Browser
                 txtAddress.Text = address;
                 addUpdate = false;
             }
+        }
+
+        private void newItemToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            settingFileDialog.ShowDialog();
+        }
+
+        private void settingFileDialog_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            UserSettings.Import(settingFileDialog.FileName);
         }
     }
 }
